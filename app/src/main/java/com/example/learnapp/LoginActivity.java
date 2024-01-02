@@ -44,9 +44,11 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // Vérifier l'authentification
                 if (validateFields()) {
-                    // Les champs sont valides, implémentez votre logique d'authentification ici
-                    Intent intent = new Intent(LoginActivity.this, ModulesActivity.class);
-                    startActivity(intent);
+                    if (checkCredentials(idEditText.getText().toString().trim(), passwordEditText.getText().toString().trim())) {
+                        // Les champs sont valides, implémentez votre logique d'authentification ici
+                        Intent intent = new Intent(LoginActivity.this, ModulesActivity.class);
+                        startActivity(intent);
+                    }
                 }
             }
         });
@@ -77,17 +79,21 @@ public class LoginActivity extends AppCompatActivity {
             passwordInputLayout.setError(null);
         }
 
+        return true;
+    }
+    private boolean checkCredentials(String id, String password) {
+        // Vérifier si les identifiants sont valides
         // Check credentials
-        if ("abcd".equals(id) && "EFGH".equals(password)) {
+        if ("abcd".equals(id) && "efgh".equals(password)) {
             // Authentication successful
             Log.d("LoginActivity", "Authentication successful");
             Toast.makeText(this, "Authentication successful", Toast.LENGTH_LONG).show();
+            return true;
         } else {
             // Incorrect credentials
             Log.d("LoginActivity", "Incorrect credentials");
             Toast.makeText(this, "Incorrect credentials", Toast.LENGTH_LONG).show();
+            return false;
         }
-
-        return true;
     }
 }
